@@ -5,9 +5,13 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define OLED_ADDR 0x3C // OLED display address (for the 128x32)
-#define RESET_PIN -1   // no reset pin
-#define ANALOG_PIN 36  // analog input pin
+using namespace std;
+
+#define OLED_ADDR 0x3C      // OLED display address (for the 128x32)
+#define RESET_PIN -1        // no reset pin
+#define ANALOG_PIN 36       // analog input pin
+#define MAX_VOLTAGE 3.3     // pin voltage
+#define ADC_RESOLUTION 4095 // 12-Bit ADC
 
 // see the following for generating UUIDs:
 // https://www.uuidgenerator.net/
@@ -21,6 +25,8 @@ BLEServer *pServer = NULL;
 BLECharacteristic *pTxCharacteristic;
 bool deviceConnected = false;
 int analog_value = 0;
+float value = 0.0;
+string voltage = "";
 
 class MyServerCallbacks: public BLEServerCallbacks
 {
@@ -74,19 +80,24 @@ void setup()
 
 void loop()
 {
+    // ADC
     analog_value = analogRead(ANALOG_PIN);
-    Serial.println(analog_value);
+    value = analog_value * MAX_VOLTAGE / ADC_RESOLUTION;
+    voltage = to_string(value) + " V";
+    Serial.println(voltage.c_str());
     
+    // OLED
     display.clearDisplay();
     display.setCursor(0, 0);
     display.setTextSize(2);
     display.setTextColor(WHITE);
-    display.println(analog_value);
+    display.println(voltage.c_str());
     display.display();
 
+    // BLE
     if (deviceConnected)
     {
-        pTxCharacteristic->setValue(std::to_string(analog_value));
+        pTxCharacteristic->setValue(voltage);
         pTxCharacteristic->notify();
         Serial.println("Notification sent");
 	}
