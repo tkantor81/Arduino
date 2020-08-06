@@ -9,13 +9,13 @@
 
 // reset pin not used on 4-pin OLED module
 // declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, RESET_PIN);  
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, RESET_PIN);
 
 void setup()   
 {         
     Serial.begin(115200);
 
-    // initialize
+    // initialize OLED display
     if(!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR))
     {
         Serial.println(F("SSD1306 allocation failed"));

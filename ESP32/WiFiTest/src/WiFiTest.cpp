@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
@@ -6,12 +7,15 @@
 #define LED_PIN   16
 #define SSID      "ralph_net"
 #define PSSWD     "u6perdun"
-#define OLED_ADDR 0x3C // OLED display address (for the 128x32)
-#define RESET_PIN -1   // no reset pin
+#define OLED_ADDR 0x3C   // OLED display address (for the 128x32)
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+#define RESET_PIN -1     // no reset pin
 
 WiFiServer server(80);
 // reset pin not used on 4-pin OLED module
-Adafruit_SSD1306 display(RESET_PIN);  
+// declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, RESET_PIN);
 
 char line_buf[80];
 int char_count = 0;
@@ -38,8 +42,14 @@ void setup()
     
     server.begin();
 
-    // initialize and clear display       
-    display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+    // initialize OLED display
+    if(!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR))
+    {
+        Serial.println(F("SSD1306 allocation failed"));
+        for(;;);
+    }
+
+    delay(1000);
     display.clearDisplay();
 
     display.setCursor(0, 0);
