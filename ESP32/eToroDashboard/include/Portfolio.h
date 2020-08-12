@@ -8,7 +8,7 @@ class Portfolio
 public:
     Portfolio();
 
-    list<Stock> GetStocks();
+    list<Stock>& GetStocks();
 
 private:
     const string portfolio = R"(

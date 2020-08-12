@@ -29,7 +29,7 @@ Portfolio::Portfolio()
     }
 }
 
-list<Stock> Portfolio::GetStocks()
+list<Stock>& Portfolio::GetStocks()
 {
     return stocks;
 }

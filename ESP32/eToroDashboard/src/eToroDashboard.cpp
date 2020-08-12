@@ -82,7 +82,7 @@ void loop()
             float totalValue = 0;
             
             list<Stock> stocks = portfolio.GetStocks();
-            for (Stock stock : stocks)
+            for (Stock& stock : stocks)
             {
                 totalInvested += stock.invested;
                 float value = marketstack.GetEndOfDayPrice(stock.symbol) * stock.units;
