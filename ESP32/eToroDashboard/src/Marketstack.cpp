@@ -9,6 +9,13 @@ float Marketstack::GetRealTimePrice(string symbol)
 
 float Marketstack::GetEndOfDayPrice(string symbol)
 {
-    StaticJsonDocument<500> response = Call("http://api.marketstack.com/v1/eod/latest?access_key=" + TOKEN + "&symbols=" + symbol);
-    return response["data"][0]["close"].as<float>();
+    try
+    {
+        StaticJsonDocument<500> response = Call("http://api.marketstack.com/v1/eod/latest?access_key=" + TOKEN + "&symbols=" + symbol);
+        return response["data"][0]["close"].as<float>();
+    }
+    catch (const std::exception& e)
+    {
+        throw;
+    }
 }

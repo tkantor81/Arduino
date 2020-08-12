@@ -32,7 +32,7 @@ StaticJsonDocument<500> APIProvider::Call(string url)
     catch (const std::exception& e)
     {
         httpClient.end(); // free the resources
-        throw e;
+        throw;
     }
 
     httpClient.end(); // free the resources
