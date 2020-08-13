@@ -7,6 +7,7 @@
 #include "Portfolio.h"
 #include "Finnhub.h"
 #include "Marketstack.h"
+#include "Alphavantage.h"
 
 using namespace std;
 
@@ -27,8 +28,9 @@ Adafruit_SSD1306 infoDisplay(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, RESET_PIN);
 TM1637Display profitDisplay(CLK_PIN, DIO_PIN);
 
 Portfolio portfolio;
-Finnhub finnhub;
-Marketstack marketstack;
+//Finnhub finnhub;
+//Marketstack marketstack;
+Alphavantage alphavantage;
 
 void PrintToInfoDisplay(const string message)
 {
@@ -63,10 +65,10 @@ void setup()
         Serial.print(".");
     }
 
-    PrintToInfoDisplay("WiFi connected");
     Serial.println("\nWiFi connected");
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
+    PrintToInfoDisplay("WiFi connected");
 }
 
 const float USD_HKD = 7.75; // USD/HKD 12.8.2020
@@ -85,7 +87,8 @@ void loop()
             for (Stock& stock : stocks)
             {
                 totalInvested += stock.invested;
-                float value = marketstack.GetEndOfDayPrice(stock.symbol) * stock.units;
+
+                float value = alphavantage.GetEndOfDayPrice(stock.symbol) * stock.units;
                 if (stock.exchange == "SEHK")
                 {
                     value /= USD_HKD;
@@ -94,7 +97,6 @@ void loop()
                 {
                     value /= USD_EUR;
                 }
-                
                 totalValue += value;
             }
 
@@ -106,9 +108,15 @@ void loop()
         }
         catch (const std::exception& e)
         {
-            PrintToInfoDisplay(e.what());
             Serial.println(e.what());
+            PrintToInfoDisplay(e.what());
         }
+    }
+    else
+    {
+        Serial.println("WiFi disconnected");
+        PrintToInfoDisplay("WiFi disconnected");
+        profitDisplay.showNumberDec(0);
     }
 
     delay(3600000); // 1 hour

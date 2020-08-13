@@ -23,21 +23,21 @@ private:
             },
             {
                 "company": "Air France-KLM",
-                "symbol": "AF.XPAR",
+                "symbol": "AF.PAR",
                 "invested": 345.9,
                 "units": 74,
                 "exchange": "Euronext Paris"
             },
             {
                 "company": "Tencent",
-                "symbol": "0700.XHKG",
+                "symbol": "0700.HK",
                 "invested": 413.79,
                 "units": 6,
                 "exchange": "SEHK"
             },
             {
                 "company": "Xiaomi",
-                "symbol": "1810.XHKG",
+                "symbol": "1810.HK",
                 "invested": 241.66,
                 "units": 123,
                 "exchange": "SEHK"
