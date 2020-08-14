@@ -16,7 +16,7 @@ public:
 protected:
     HTTPClient httpClient;
 
-    StaticJsonDocument<500> Call(string url);
+    StaticJsonDocument<500> Call(const string url);
 };
 
 #endif

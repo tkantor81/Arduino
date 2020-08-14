@@ -27,11 +27,6 @@ Adafruit_SSD1306 infoDisplay(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, RESET_PIN);
 // set up the 4-digit seven segment display
 TM1637Display profitDisplay(CLK_PIN, DIO_PIN);
 
-Portfolio portfolio;
-//Finnhub finnhub;
-//Marketstack marketstack;
-Alphavantage alphavantage;
-
 void PrintToInfoDisplay(const string message)
 {
     infoDisplay.clearDisplay();
@@ -71,8 +66,8 @@ void setup()
     PrintToInfoDisplay("WiFi connected");
 }
 
-const float USD_HKD = 7.75; // USD/HKD 12.8.2020
-const float USD_EUR = 0.85; // USD/EUR 12.8.2020
+const float USD_HKD = 7.75; // USD/HKD 15.8.2020
+const float USD_EUR = 0.84; // USD/EUR 15.8.2020
 
 void loop() 
 {
@@ -82,12 +77,17 @@ void loop()
         {
             float totalInvested = 0;
             float totalValue = 0;
+
+            Portfolio portfolio;
+            Alphavantage alphavantage;
             
             list<Stock> stocks = portfolio.GetStocks();
             for (Stock& stock : stocks)
             {
                 totalInvested += stock.invested;
 
+                Serial.print("Stock requesting: ");
+                Serial.println(stock.company.c_str()); 
                 float value = alphavantage.GetEndOfDayPrice(stock.symbol) * stock.units;
                 if (stock.exchange == "SEHK")
                 {
@@ -97,7 +97,11 @@ void loop()
                 {
                     value /= USD_EUR;
                 }
+                Serial.print("Value: ");
+                Serial.println(value);
                 totalValue += value;
+
+                delay(15000); // 15 seconds (Alpha Vantage - up to 5 API requests per minute)
             }
 
             Serial.print("Total invested: ");
@@ -119,5 +123,5 @@ void loop()
         profitDisplay.showNumberDec(0);
     }
 
-    delay(3600000); // 1 hour
+    delay(1800000); // 0.5 hour (Alpha Vantage - up to 500 API requests per day)
 }

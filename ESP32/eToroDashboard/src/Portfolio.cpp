@@ -14,7 +14,7 @@ Portfolio::Portfolio()
     // test if parsing succeeds
     if (jsonError)
     {
-        throw runtime_error("deserializeJson() failed" + string(jsonError.c_str()));
+        throw runtime_error("Portfolio deserialization failed");
     }
 
     for (int i = 0; i < jsonDoc["portfolio"].size(); ++i)
