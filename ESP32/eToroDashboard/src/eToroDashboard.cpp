@@ -20,6 +20,9 @@ using namespace std;
 #define RESET_PIN     -1   // no reset pin
 #define CLK_PIN       18   // 4-digit seven segment display CLK pin
 #define DIO_PIN       19   // 4-digit seven segment display DIO pin
+#define LED_R_PIN     15   // RGB LED red pin
+#define LED_G_PIN      2   // RGB LED green pin
+#define LED_B_PIN      0   // RGB LED blue pin
 
 // reset pin not used on 4-pin OLED module
 // declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
@@ -37,10 +40,23 @@ void PrintToInfoDisplay(const string message)
     infoDisplay.display();
 }
 
+void SetRGBLight(const int red, const int green, const int blue)
+{
+    digitalWrite(LED_R_PIN, red);
+    digitalWrite(LED_G_PIN, green);
+    digitalWrite(LED_B_PIN, blue);
+}
+
 void setup()   
 {         
     Serial.begin(BAUD_RATE);
 
+    // initialize the digital pin as an output for RGB LED
+    pinMode(LED_R_PIN, OUTPUT);
+    pinMode(LED_G_PIN, OUTPUT);
+    pinMode(LED_B_PIN, OUTPUT);
+    SetRGBLight(LOW, LOW, HIGH);
+    
     // initialize OLED display
     if(!infoDisplay.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR))
     {
@@ -68,6 +84,7 @@ void setup()
 
 const float USD_HKD = 7.75; // USD/HKD 15.8.2020
 const float USD_EUR = 0.84; // USD/EUR 15.8.2020
+float lastProfit = 0;
 
 void loop() 
 {
@@ -108,19 +125,31 @@ void loop()
             Serial.println(totalInvested);
             Serial.print("Total value: ");
             Serial.println(totalValue);
-            profitDisplay.showNumberDec(totalValue - totalInvested);
+            float profit = totalValue - totalInvested;
+            profitDisplay.showNumberDec(profit);
+
+            if (profit > lastProfit)
+            {
+                SetRGBLight(LOW, HIGH, LOW);
+            }
+            else if (profit < lastProfit)
+            {
+                SetRGBLight(HIGH, LOW, LOW);
+            }
+            lastProfit = profit;
         }
         catch (const std::exception& e)
         {
             Serial.println(e.what());
             PrintToInfoDisplay(e.what());
+            SetRGBLight(LOW, LOW, HIGH);
         }
     }
     else
     {
         Serial.println("WiFi disconnected");
         PrintToInfoDisplay("WiFi disconnected");
-        profitDisplay.showNumberDec(0);
+        SetRGBLight(LOW, LOW, HIGH);
     }
 
     delay(1800000); // 0.5 hour (Alpha Vantage - up to 500 API requests per day)
