@@ -24,8 +24,8 @@ private:
             {
                 "company": "Air France-KLM",
                 "symbol": "AF.PAR",
-                "invested": 345.9,
-                "units": 74,
+                "invested": 206.16,
+                "units": 42,
                 "exchange": "Euronext Paris"
             },
             {
@@ -38,16 +38,23 @@ private:
             {
                 "company": "Xiaomi",
                 "symbol": "1810.HK",
-                "invested": 241.66,
-                "units": 123,
+                "invested": 377.59,
+                "units": 172,
                 "exchange": "SEHK"
             },
             {
-                "company": "Intel",
-                "symbol": "INTC",
-                "invested": 247.65,
+                "company": "AMD",
+                "symbol": "AMD",
+                "invested": 389.83,
                 "units": 5,
                 "exchange": "NASDAQ"
+            },
+            {
+                "company": "Nio",
+                "symbol": "NIO",
+                "invested": 352.83,
+                "units": 19,
+                "exchange": "NYSE"
             }
         ]
     })";
