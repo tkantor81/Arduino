@@ -12,7 +12,7 @@
 using namespace std;
 
 #define BAUD_RATE     115200
-#define SSID          "ralph_net"
+#define SSID          "vali_net_ext_2.4GHz"
 #define PSSWD         "u6perdun"
 #define OLED_ADDR     0x3C // OLED display address (for the 128x32)
 #define SCREEN_WIDTH  128  // OLED display width, in pixels
@@ -82,8 +82,8 @@ void setup()
     PrintToInfoDisplay("WiFi connected");
 }
 
-const float USD_HKD = 7.75; // USD/HKD 15.8.2020
-const float USD_EUR = 0.84; // USD/EUR 15.8.2020
+const float USD_HKD = 7.75; // USD/HKD 30.9.2020
+const float USD_EUR = 0.85; // USD/EUR 30.9.2020
 float lastProfit = 0;
 
 void loop() 
@@ -125,16 +125,16 @@ void loop()
             Serial.println(totalInvested);
             Serial.print("Total value: ");
             Serial.println(totalValue);
+            
             float profit = totalValue - totalInvested;
             profitDisplay.showNumberDec(profit);
-
             if (profit > lastProfit)
             {
-                SetRGBLight(LOW, HIGH, LOW);
+                SetRGBLight(LOW, HIGH, LOW); // green light
             }
             else if (profit < lastProfit)
             {
-                SetRGBLight(HIGH, LOW, LOW);
+                SetRGBLight(HIGH, LOW, LOW); // red light
             }
             lastProfit = profit;
         }
