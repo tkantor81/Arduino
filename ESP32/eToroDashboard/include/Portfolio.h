@@ -15,24 +15,10 @@ private:
     {
         "portfolio": [
             {
-                "company": "Boeing",
-                "symbol": "BA",
-                "invested": 312.19,
-                "units": 2,
-                "exchange": "NYSE"
-            },
-            {
-                "company": "Air France-KLM",
-                "symbol": "AF.PAR",
-                "invested": 206.16,
-                "units": 42,
-                "exchange": "Euronext Paris"
-            },
-            {
                 "company": "Tencent",
                 "symbol": "0700.HK",
-                "invested": 413.79,
-                "units": 6,
+                "invested": 131.99,
+                "units": 2,
                 "exchange": "SEHK"
             },
             {
@@ -45,16 +31,37 @@ private:
             {
                 "company": "AMD",
                 "symbol": "AMD",
-                "invested": 389.83,
-                "units": 5,
+                "invested": 589.83,
+                "units": 7.57,
                 "exchange": "NASDAQ"
             },
             {
                 "company": "Nio",
                 "symbol": "NIO",
-                "invested": 352.83,
-                "units": 19,
+                "invested": 409.83,
+                "units": 20.38,
                 "exchange": "NYSE"
+            },
+            {
+                "company": "Zynga",
+                "symbol": "ZNGA",
+                "invested": 384.93,
+                "units": 47,
+                "exchange": "NASDAQ"
+            },
+            {
+                "company": "Aston Martin",
+                "symbol": "AML.L",
+                "invested": 573.09,
+                "units": 877,
+                "exchange": "LSE"
+            },
+            {
+                "company": "Cineworld",
+                "symbol": "CINE.L",
+                "invested": 428.00,
+                "units": 622.53,
+                "exchange": "LSE"
             }
         ]
     })";

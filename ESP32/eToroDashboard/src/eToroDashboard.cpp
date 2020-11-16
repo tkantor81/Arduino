@@ -82,8 +82,9 @@ void setup()
     PrintToInfoDisplay("WiFi connected");
 }
 
-const float USD_HKD = 7.75; // USD/HKD 30.9.2020
-const float USD_EUR = 0.85; // USD/EUR 30.9.2020
+const float USD_HKD = 7.75;  // USD/HKD 16.11.2020
+const float USD_EUR = 0.84;  // USD/EUR 16.11.2020
+const float USD_GBX = 76.34; // USD/GBX 16.11.2020
 float lastProfit = 0;
 
 void loop() 
@@ -113,6 +114,10 @@ void loop()
                 else if (stock.exchange == "Euronext Paris")
                 {
                     value /= USD_EUR;
+                }
+                else if (stock.exchange == "LSE")
+                {
+                    value /= USD_GBX;
                 }
                 Serial.print("Value: ");
                 Serial.println(value);
